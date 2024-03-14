@@ -1,0 +1,66 @@
+groupadd oinstall 
+groupadd dba 
+
+useradd -g oinstall -d /home/oracle -s /bin/bash -c "oracle DB Owner" oracle
+usermod -a -G dba oracle
+
+passwd oracle
+mkdir -p /u01/app/oracle/product/19.0.0.0/dbhome_1
+chmod -R 755 /u01
+chown -R oracle:oinstall /u01
+
+ls -ld /u01/app/oracle/product/19.0.0.0/dbhome_1
+
+
+init 6
+login as oracle
+
+install winscp on host machine
+check ip on guest machine
+and connect with that ip through winscp.
+and copy your software to guest machine in /home/oracle/software.
+
+
+go to software location
+unzip LINUX.X64_193000_db_home.zip -d /u01/app/oracle/product/19.0.0.0/dbhome_1/
+
+
+cd /u01/app/oracle/product/19.0.0.0/dbhome_1/
+./runInstaller
+create software only 
+single instance database
+enterprise edition
+oracle base : /u01/app/oracle
+create inventory next
+all oinstall groups
+dont automatically run  
+
+run fix ups
+run below from root user
+yum install ksh* -y
+yum install libaio* -y
+
+
+create database 
+/u01/app/oracle/product/19.0.0.0/dbhome_1/bin/dbca	
+create database
+cat /etc/oratab
+
+
+setting bash profile
+go to /home/oracle
+vi .bash_profile
+
+export ORACLE_BASE=/u01/app/oracle
+export ORACLE_HOME=/u01/app/oracle/product/19.0.0.0/dbhome_1
+
+export ORACLE_SID=chennai
+
+
+PATH=$PATH:$HOME/.local/bin:$ORACLE_HOME/bin
+
+export PATH
+
+change host name
+
+hostnamectl set-hostname sandviks.com
