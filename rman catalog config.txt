@@ -7,6 +7,8 @@ now make changes in sqlenvironment
 catdb:
 create user rman_user identified by rman_user account unlock;
 grant create session,connect,resource to rman_user;
+alter user rman_user quota unlimited on users;
+
 grant recovery_catalog_owner to rman_user;
 
 exit
