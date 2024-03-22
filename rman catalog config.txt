@@ -13,7 +13,7 @@ grant recovery_catalog_owner to rman_user;
 
 exit
 
-rman
+rman target /
 
 rman> connect catalog rman_user/rman_user@to_catdb
 
