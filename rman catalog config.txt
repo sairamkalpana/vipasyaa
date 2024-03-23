@@ -21,7 +21,7 @@ rman> create catalog;
 
 exit
 [oracle@sai]rman catalog rman_user/rman_user@to_catdb target sys/Clone_789@to_proddb
-[oracle@sai]rman catalog rman_user/rman_user@to_catlog target sys/oracledb@to_proddb>
+[oracle@sai]rman catalog rman_user/rman_user@to_catalog target sys/oracledb@to_proddb
 rman>register database;   
                 (or)
 RMAN> connect target sys/Proddb_789@to_proddb
