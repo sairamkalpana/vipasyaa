@@ -156,10 +156,7 @@ exit
 
 sqlplus / as sysdba
 
-ALTER DATABASE RECOVER MANAGED STANDBY DATABASE disconnect from session;
-
-
-
+ 
 primary
 
 alter system set log_archive_dest_state_2=DEFER scope=both sid='*';
@@ -232,18 +229,33 @@ ADR_BASE_LISTENER = /u01/app/oracle
 set lines 200
 col DESTINATION for a30
 col ERROR for a50
-select DESTINATION,TYPE,ARCHIVED_THREAD#,APPLIED_SEQ#,ARCHIVED_SEQ#,GAP_STATUS,error from v$archive_dest_status where DEST_ID=2;
+select DESTINATION,TYPE,ARCHIVED_THREAD#,APPLIED_SEQ#,ARCHIVED_SEQ#,GAP_STATUS,error from v$archive_dest_status where DEST_ID=2;(this parameter is helpful for knowing errors)
 
 select process,status from v$managed_standby;
+SQL> select process,status from v$managed_standby;
+
+PROCESS   STATUS
+--------- ------------
+ARCH	  CONNECTED
+DGRD	  ALLOCATED
+DGRD	  ALLOCATED
+ARCH	  CONNECTED
+ARCH	  CONNECTED
+ARCH	  CONNECTED
+MRP0	  WAIT_FOR_GAP
+
+
 
 -- to check the sysnc.
 set lines 300 pages 300;
 SELECT sequence#, first_time, next_time, applied FROM v$archived_log ORDER BY sequence#;
+no rows selected
 
 
 set lines 300 pages 300;
 col DB_UNIQUE_NAME for a10;
 select name,db_unique_name,open_mode,DATABASE_ROLE,PROTECTION_MODE,SWITCHOVER#,SWITCHOVER_status,current_scn from v$database;
+
 
 set lines 300 pages 300;
 SELECT sequence#, FIRST_CHANGE#,NEXT_CHANGE# FROM v$archived_log ORDER BY sequence#;
